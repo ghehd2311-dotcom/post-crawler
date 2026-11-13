@@ -56,9 +56,6 @@ def crawl_rss(rss_url):
             continue
 
         clean_text = normalize_text(text)
-        # df = pd.DataFrame([clean_text])
-        # print(clean_text)  # 추출된 본문 일부 출력
-        # print(df)  # 추출된 본문 일부 출력
         res = {"title": title, "item": clean_text}
         items.append(res)
 
