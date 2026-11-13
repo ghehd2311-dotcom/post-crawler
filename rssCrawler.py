@@ -45,10 +45,6 @@ def crawl_rss(rss_url):
         link = entry.link  # 글 링크
         # published = getattr(entry, "published", "날짜 없음")  # 발행일
 
-        # print(f"제목: {title}")
-        # print(f"링크: {link}")
-        # print(f"날짜: {published}")
-
         if link == "":
             continue  # 링크가 없는 경우 건너뜀
 
