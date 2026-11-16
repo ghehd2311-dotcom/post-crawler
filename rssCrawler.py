@@ -41,6 +41,7 @@ def crawl_rss(rss_url):
     feed = feedparser.parse(rss_url)
     items = []
     for entry in feed.entries:
+
         title = entry.title  # 글 제목
         link = entry.link  # 글 링크
         # published = getattr(entry, "published", "날짜 없음")  # 발행일
@@ -56,7 +57,7 @@ def crawl_rss(rss_url):
             continue
 
         clean_text = normalize_text(text)
-        res = {"title": title, "item": clean_text}
+        res = {"title": title, "item": clean_text, "link": link}
         items.append(res)
 
     return items  # 첫 번째 글의 본문만 반환 (테스트용)
