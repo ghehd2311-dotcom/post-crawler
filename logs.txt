@@ -1,0 +1,113 @@
+db connection success
+--------------------------------------------------------------------------------
+Client 생성 성공!
+Traceback (most recent call last):
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\pandas\compat\_optional.py", line 158, in import_optional_dependency
+    module = importlib.import_module(name)
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1389, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1353, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1242, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'tabulate'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Workspace\post-crawler\main.py", line 41, in <module>
+    df.to_markdown(r"C:\Users\백호동\Documents\Obsidian Vault", index=False)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\pandas\core\frame.py", line 2833, in to_markdown
+    tabulate = import_optional_dependency("tabulate")
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\pandas\compat\_optional.py", line 161, in import_optional_dependency
+    raise ImportError(msg) from err
+ImportError: `Import tabulate` failed.  Use pip, conda, or your preferred package management tool to install the tabulate package.
+db connection success
+--------------------------------------------------------------------------------
+Client 생성 성공!
+Traceback (most recent call last):
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\sqlalchemy\engine\base.py", line 1977, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\sqlalchemy\engine\default.py", line 1192, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: 오류:  "link" 이름의 칼럼은 없습니다
+LINE 1: SELECT link FROM post
+               ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\pandas\io\sql.py", line 1733, in execute
+    return execute_function(sql, *args)
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\sqlalchemy\engine\base.py", line 1801, in exec_driver_sql
+    ret = self._execute_context(
+        dialect,
+    ...<5 lines>...
+        distilled_parameters,
+    )
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\sqlalchemy\engine\base.py", line 1868, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\sqlalchemy\engine\base.py", line 1996, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\sqlalchemy\engine\base.py", line 1977, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\sqlalchemy\engine\default.py", line 1192, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) 오류:  "link" 이름의 칼럼은 없습니다
+LINE 1: SELECT link FROM post
+               ^
+
+[SQL: SELECT link FROM post]
+(Background on this error at: https://sqlalche.me/e/21/f405)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Workspace\post-crawler\main.py", line 19, in <module>
+    existing_df = pd.read_sql("SELECT link FROM post", engine)
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\pandas\io\sql.py", line 780, in read_sql
+    return pandas_sql.read_query(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        sql,
+        ^^^^
+    ...<6 lines>...
+        dtype=dtype,
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\pandas\io\sql.py", line 1910, in read_query
+    result = self.execute(sql, params)
+  File "C:\Users\백호동\AppData\Local\Programs\Python\Python315\Lib\site-packages\pandas\io\sql.py", line 1735, in execute
+    raise DatabaseError(f"Execution failed on sql '{sql}': {exc}") from exc
+pandas.errors.DatabaseError: Execution failed on sql 'SELECT link FROM post': (psycopg2.errors.UndefinedColumn) 오류:  "link" 이름의 칼럼은 없습니다
+LINE 1: SELECT link FROM post
+               ^
+
+[SQL: SELECT link FROM post]
+(Background on this error at: https://sqlalche.me/e/21/f405)
