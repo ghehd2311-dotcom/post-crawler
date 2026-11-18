@@ -4,6 +4,7 @@ import exportToMd as ex
 import pandas as pd
 
 import dbConnection
+import slackMessage
 
 # 데이터 베이스 연결
 engine = dbConnection.DbConn()
@@ -40,3 +41,5 @@ df.to_sql(
     index=False,  # 데이터프레임의 행 번호(0, 1, 2...)는 컬럼으로 넣지 않음
 )
 ex.exportToMd(new_posts)
+
+slackMessage.slack_send_message("post upload done!")
