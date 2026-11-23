@@ -44,7 +44,7 @@ def crawl_rss(rss_url):
 
         title = entry.title  # 글 제목
         link = entry.link  # 글 링크
-        # published = getattr(entry, "published", "날짜 없음")  # 발행일
+        published = getattr(entry, "published", "날짜 없음")  # 발행일
 
         if link == "":
             continue  # 링크가 없는 경우 건너뜀
@@ -57,7 +57,7 @@ def crawl_rss(rss_url):
             continue
 
         clean_text = normalize_text(text)
-        res = {"title": title, "item": clean_text, "link": link}
+        res = {"title": title, "item": clean_text, "link": link, "published": published}
         items.append(res)
 
     return items  # 첫 번째 글의 본문만 반환 (테스트용)

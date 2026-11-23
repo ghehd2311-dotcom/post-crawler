@@ -32,8 +32,7 @@ for post in new_posts:
 
 df = pd.DataFrame(new_posts)
 
-
-# 1. 디비에 저장
+print(df)
 df.to_sql(
     name="post",  # 생성될 테이블 이름
     con=engine,  # DB 연결 엔진

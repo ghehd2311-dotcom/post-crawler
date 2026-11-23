@@ -1,8 +1,17 @@
-from pathlib import Path
 import re
+import os
+from pathlib import Path
+from datetime import datetime
+from utils.week_time import get_week_folder, get_year_folder
 
-vault = Path(r"C:\Users\백호동\Documents\Obsidian Vault\TechBlog")
-vault.mkdir(exist_ok=True)
+year = str(get_year_folder())
+week = str(get_week_folder(datetime.now().strftime("%Y-%m-%d")))
+base_path = r"C:\Users\백호동\Documents\Obsidian Vault\TechBlog"
+
+path = os.path.join(base_path, year, week)
+
+vault = Path(path)
+vault.mkdir(parents=True, exist_ok=True)
 
 
 def safe_filename(title):
@@ -14,7 +23,6 @@ def safe_filename(title):
 def exportToMd(new_posts):
     for post in new_posts:
         file_name = safe_filename(post["title"])
-
         md_path = vault / f"{file_name}.md"
 
         content = f"""
