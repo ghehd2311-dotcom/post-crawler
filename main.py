@@ -35,14 +35,13 @@ for post in new_posts:
     post["summary"] = summary
 
 df = pd.DataFrame(new_posts)
-print(df)
 
-# df.to_sql(
-#     name="post",  # 생성될 테이블 이름
-#     con=engine,  # DB 연결 엔진
-#     if_exists="append",  # 'replace': 기존 테이블 덮어쓰기 / 'append': 기존 테이블에 이어서 추가
-#     index=False,  # 데이터프레임의 행 번호(0, 1, 2...)는 컬럼으로 넣지 않음
-# )
-# ex.exportToMd(new_posts)
+df.to_sql(
+    name="post",  # 생성될 테이블 이름
+    con=engine,  # DB 연결 엔진
+    if_exists="append",  # 'replace': 기존 테이블 덮어쓰기 / 'append': 기존 테이블에 이어서 추가
+    index=False,  # 데이터프레임의 행 번호(0, 1, 2...)는 컬럼으로 넣지 않음
+)
+ex.exportToMd(new_posts)
 
-# slackMessage.slack_send_message("post upload done!")
+slackMessage.slack_send_message("post upload done!")

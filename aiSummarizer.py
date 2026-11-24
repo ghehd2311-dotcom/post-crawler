@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 
 from google import genai
+from google.genai import types
+from google.genai.errors import APIError
 
 load_dotenv()
 key = os.getenv("GOOGLE_API_KEY")
@@ -10,7 +12,22 @@ key = os.getenv("GOOGLE_API_KEY")
 
 def genaiClient():
     try:
-        client = genai.Client(api_key=key)
+        # client = genai.Client(api_key=key)
+
+        # 1. 클라이언트 생성 시 503, 429 등에 대한 자동 재시도 옵션 설정
+        client = genai.Client(
+            api_key=key,
+            http_options=types.HttpOptions(
+                retry_options=types.HttpRetryOptions(
+                    attempts=5,  # 최초 1회 + 최대 4회 재시도
+                    initial_delay=2.0,  # 첫 재시도 전 대기 시간 (초)
+                    max_delay=30.0,  # 최대 대기 시간 (초)
+                    exp_base=2.0,  # 대기 시간 증가 배수 (2초 -> 4초 -> 8초 -> 16초...)
+                    http_status_codes=[429, 500, 502, 503, 504],
+                )
+            ),
+        )
+
         print("Client 생성 성공!")
         return client
     except Exception as e:
@@ -36,9 +53,16 @@ def summarize_text(client, data):
         [요약할 데이터]
         {data}
         """
-
-    response = client.models.generate_content(
-        model="gemini-3.5-flash-lite", contents=[prompt, data]
-    )
-
-    return response.text
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.5-flash-lite", contents=[prompt, data]
+        )
+        return response.text
+    except APIError as e:
+        # 5번 모두 재시도했으나 여전히 503이거나, 400(잘못된 요청) 등 재시도 불가 에러인 경우
+        if e.code == 503:
+            print(f"구글 서버 과부하가 지속되어 요청에 실패했습니다: {e.message}")
+        else:
+            print(f"API 오류가 발생했습니다 (코드 {e.code}): {e.message}")
+    except Exception as e:
+        print(f"예상치 못한 오류가 발생했습니다: {e}")
