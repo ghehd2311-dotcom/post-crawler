@@ -38,26 +38,34 @@ def normalize_text(text: str) -> str:
 
 
 def crawl_rss(rss_url):
-    feed = feedparser.parse(rss_url)
+    # rss_url 배열로 변경!
     items = []
-    for entry in feed.entries:
+    for url in rss_url:
 
-        title = entry.title  # 글 제목
-        link = entry.link  # 글 링크
-        published = getattr(entry, "published", "날짜 없음")  # 발행일
+        feed = feedparser.parse(url)
+        for entry in feed.entries:
 
-        if link == "":
-            continue  # 링크가 없는 경우 건너뜀
+            title = entry.title  # 글 제목
+            link = entry.link  # 글 링크
+            published = getattr(entry, "published", "날짜 없음")  # 발행일
 
-        html = requestRss(link)  # 링크 요청
-        text = webTextProcessor(html)
+            if link == "":
+                continue  # 링크가 없는 경우 건너뜀
 
-        if text is None:
-            print(f"본문 추출 실패: {link}")
-            continue
+            html = requestRss(link)  # 링크 요청
+            text = webTextProcessor(html)
 
-        clean_text = normalize_text(text)
-        res = {"title": title, "item": clean_text, "link": link, "published": published}
-        items.append(res)
+            if text is None:
+                print(f"본문 추출 실패: {link}")
+                continue
+
+            clean_text = normalize_text(text)
+            res = {
+                "title": title,
+                "item": clean_text,
+                "link": link,
+                "published": published,
+            }
+            items.append(res)
 
     return items  # 첫 번째 글의 본문만 반환 (테스트용)
