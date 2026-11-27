@@ -15,3 +15,8 @@ def get_week_folder(date_str):
     week = ((date.day - 1) // 7) + 1
 
     return f"{month}월 {week}주차"
+
+
+def get_Date_folder():
+    date = datetime.now().strftime("%m-%d")
+    return date

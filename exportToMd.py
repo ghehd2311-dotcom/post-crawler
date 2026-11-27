@@ -2,7 +2,7 @@ import re
 import os
 from pathlib import Path
 from datetime import datetime
-from utils.week_time import get_week_folder, get_year_folder
+from utils.week_time import get_week_folder, get_year_folder, get_Date_folder
 
 year = str(get_year_folder())
 week = str(get_week_folder(datetime.now().strftime("%Y-%m-%d")))
@@ -23,7 +23,8 @@ def safe_filename(title):
 def exportToMd(new_posts):
     for post in new_posts:
         file_name = safe_filename(post["title"])
-        md_path = vault / f"{file_name}.md"
+        date = get_Date_folder()
+        md_path = vault / f"[{date}]{file_name}.md"
 
         content = f"""
     # {post['title']}
